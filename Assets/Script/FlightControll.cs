@@ -1,72 +1,94 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 
 public class FlightControll : MonoBehaviour
 {
+    //機体の最大移動幅
+    [SerializeField] private Vector2 LaneSize; //[(x,y)]
+
     //最大速度の設定
-    [SerializeField] private float RotateRate; //横回転の速度の割合
-    [SerializeField] private float Speed_Y; //縦方向
-    [SerializeField] private float Speed_Z; //前方向
+    [SerializeField] private float Speed_X; //横方向 [m/s]
+    [SerializeField] private float Speed_Y; //縦方向 [m/s]
+    [SerializeField] private float Speed_Z; //前方向 [m/s]
 
-    [SerializeField] private float Acceleration_Z; //前方向の加速度
-    [SerializeField] private float ReRotateRate; //水平に戻る速度の割合
+    [SerializeField] private float Acceleration_Z; //前方向の加速度 [m/s^2]
+    float AcceleratedSpeed; //加速されている前方向の速度 [m/s]
 
+    [SerializeField] private float RotateRate; //横回転の速度の割合 [定数]
+    [SerializeField] private float ReRotateRate; //水平に戻る速度の割合 [m/s]
 
     Vector3 MoveDirection = Vector3.zero;
-
     InputAction _moveAction;
 
     void Start()
     {
         _moveAction = InputSystem.actions.FindAction("Move");
+        AcceleratedSpeed = 0.0f;
     }
 
 
     void Update()
     {
         //自動で前に進む
-        float Accelerated_Z = MoveDirection.z + (Acceleration_Z * Time.deltaTime);
-        MoveDirection.z = Mathf.Clamp(Accelerated_Z,0,Speed_Z);
+        AcceleratedSpeed += Acceleration_Z * Time.deltaTime;
+        MoveDirection.z = Mathf.Clamp(AcceleratedSpeed,0,Speed_Z) * Time.deltaTime;
 
+        //横方向への移動
+        MoveDirection.x = _moveAction.ReadValue<Vector2>().x * Speed_X * Time.deltaTime;
         //縦方向への移動
-        MoveDirection.y = _moveAction.ReadValue<Vector2>().y * Speed_Y;
+        MoveDirection.y = _moveAction.ReadValue<Vector2>().y * Speed_Y * Time.deltaTime;
 
-
-        if(_moveAction.ReadValue<Vector2>().x == 0.0f)
-        {
-            ReturnRotate();
-            
-        }
-        else
-        {
-            //入力されていない場合、機体を水平にする
-            float abs = -(_moveAction.ReadValue<Vector2>().x);
+        //機体をZ軸回転させる（q:左　e:右）
+        if(Keyboard.current.qKey.isPressed){
+            float abs = 1;
             SetRotate(abs);
         }
+        else if(Keyboard.current.eKey.isPressed)
+        {
+            float abs = -1;
+            SetRotate(abs);
+        }
+        //rKeyで機体を水平に戻す
+        else if(Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            StartCoroutine(ReturnRotate());
+        }
 
+        //機体の移動後の位置
         Vector3 GlobalDirection = transform.position + transform.TransformDirection(MoveDirection);
-
+        
+        //機体の移動幅の制限
+        GlobalDirection.x = Mathf.Clamp(GlobalDirection.x,-LaneSize.x,LaneSize.x);
+        GlobalDirection.y = Mathf.Clamp(GlobalDirection.y,-LaneSize.y,LaneSize.y);
+        
+        //移動の反映
         transform.position = GlobalDirection;
     }
 
-    //入力に対して機体の角度を調整
+     //入力に対して機体の角度を調整
     void SetRotate(float abs)
     {
         //機体の角度をいくら傾けるか
         float target = abs * RotateRate;
-        transform.Rotate(0.0f,0.0f,target);
+        transform.Rotate(0,0,target);
     }
 
     //機体の角度を自動で水平に戻す
-    void ReturnRotate()
+    IEnumerator ReturnRotate()
     {
-        float current = transform.rotation.z;
-        Debug.Log("Re" + current);
+        float current = transform.eulerAngles.z;
 
-        //機体の角度を水平にいくら近づけるか
-        float target = -Mathf.Lerp(0.0f,current,ReRotateRate);
-        transform.Rotate(0.0f,0.0f,target);
+        while(current > ReRotateRate){
+
+            //機体の角度を水平にいくら近づけるか　（完全に水平にはならない）
+            float target = Mathf.Sign(current - 180) * ReRotateRate;
+            transform.Rotate(0,0,target);
+            current = transform.eulerAngles.z;
+            yield return null;
+        }
+
+        //完全に水平にする
+        transform.rotation = Quaternion.Euler(0.0f,0.0f,0.0f);
     }
 }
