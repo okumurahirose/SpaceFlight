@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class FlightControll : MonoBehaviour
 {
@@ -25,19 +26,25 @@ public class FlightControll : MonoBehaviour
     const float StunTime = 0.5f; //Stun状態の長さ
     float RecoverTime = 0.0f; //残りのStun状態時間
     
+    
 
     void Start()
     {
         _moveAction = InputSystem.actions.FindAction("Move");
-        _animator = GetComponent<Animator>();
         AcceleratedSpeed = 0.0f;
+
+        //Animation,Animatorは子オブジェクトにアタッチされているため、子オブジェクトを探して取得
+        GameObject child = transform.GetChild(0).gameObject;
+        _animator = child.GetComponent<Animator>();
+        
     }
 
 
     void Update()
-    {
+    {   
         if (IsStun())
-        {
+        {   
+            //Stun状態ならすべての移動を停止
             AcceleratedSpeed = 0.0f;
             MoveDirection = Vector3.zero;
             RecoverTime -= Time.deltaTime;
@@ -87,8 +94,6 @@ public class FlightControll : MonoBehaviour
         //機体の角度をいくら傾けるか
         float target = abs * RotateRate;
         transform.Rotate(0,0,target);
-        Debug.Log(transform.eulerAngles.z);
-
     }
 
     //機体の角度を自動で水平に戻す
@@ -118,11 +123,13 @@ public class FlightControll : MonoBehaviour
     //Enemyに接触したら衝突イベントを実行
     void OnCollisionEnter(Collision other)
     {   
-        Destroy(other.gameObject);
+        //Stun状態なら何もしない
         if(IsStun()) return;
+
         if(other.gameObject.tag == "Enemy"){
             RecoverTime = StunTime;
             _animator.SetTrigger("Collision");
         }
+        Destroy(other.gameObject);
     }
 }
