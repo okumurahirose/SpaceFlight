@@ -25,6 +25,8 @@ public class FlightControll : MonoBehaviour
 
     const float StunTime = 0.5f; //Stun状態の長さ
     float RecoverTime = 0.0f; //残りのStun状態時間
+
+    [SerializeField] private GameObject GameController;
     
     
 
@@ -131,5 +133,7 @@ public class FlightControll : MonoBehaviour
             _animator.SetTrigger("Collision");
         }
         Destroy(other.gameObject);
+
+        GameController.SendMessage("ManageLife");
     }
 }
