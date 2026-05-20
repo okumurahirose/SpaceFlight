@@ -25,7 +25,7 @@ public class FlightControll : MonoBehaviour
 
     const float StunTime = 0.5f; //Stun状態の長さ
     float RecoverTime = 0.0f; //残りのStun状態時間
-
+    bool IsDead = false; //Lifeが０になったか
     [SerializeField] private GameObject GameController;
     
     
@@ -119,7 +119,16 @@ public class FlightControll : MonoBehaviour
     //Stun状態であるか
     bool IsStun()
     {
+        //死んでいたら強制スタン状態
+        if(IsDead) return true;
+
         return RecoverTime > 0.0f;
+    }
+
+    //呼び出されたら死んでいる状態にする
+    void Dead()
+    {
+        IsDead = true;
     }
 
     //Enemyに接触したら衝突イベントを実行
