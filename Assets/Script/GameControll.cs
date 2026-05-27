@@ -37,8 +37,6 @@ public class GameControll : MonoBehaviour
 
         //Lifeが全損したら死亡状態を発信
         if(NowLifeCount == 0)  Player.SendMessage("Dead");
-        
-        Debug.Log(NowLifeCount);
 
         return;
     }

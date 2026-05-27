@@ -50,7 +50,7 @@ public class StageGenerate : MonoBehaviour
                                     new Vector3(0.0f,0.0f,GeneratePosition),
                                     Quaternion.identity);
 
-        //生成したステージをリストと親オブジェクトに加え、次の生成位置を更新
+        //生成したステージをリストと親オブジェクトの子オブジェクトに加え、次の生成位置を更新
         GeneratedStages.Add(Instance);
         Instance.transform.SetParent(Parent.transform);
         GeneratePosition += StageSize;

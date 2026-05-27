@@ -140,8 +140,8 @@ public class FlightControll : MonoBehaviour
         if(other.gameObject.tag == "Enemy"){
             RecoverTime = StunTime;
             _animator.SetTrigger("Collision");
+            Destroy(other.gameObject);
         }
-        Destroy(other.gameObject);
 
         GameController.SendMessage("ManageLife");
     }
