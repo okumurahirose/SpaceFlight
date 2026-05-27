@@ -9,6 +9,7 @@ public class Shoot : MonoBehaviour
 
     void Awake()
     {
+        //BulletPoolの取得
         Pool = FindFirstObjectByType<BulletPool>();
     }
 
@@ -25,10 +26,13 @@ public class Shoot : MonoBehaviour
 
     void Fire()
     {  
+            //PoolからBulletを取得
             GameObject target = Pool.Get();
+            //発射位置の設定
             Vector3 targetposition = transform.position;
             targetposition.z += 2;
             target.transform.position = targetposition;
+            //Bulletの先端が前を向くようにする
             target.transform.eulerAngles = new Vector3(0,-90,-90);
     }
 }
