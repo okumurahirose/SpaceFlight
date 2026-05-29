@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8059311260649917604}
   - component: {fileID: 3847097401025159397}
   - component: {fileID: 8553651489978198084}
+  - component: {fileID: 8018444710708165795}
   m_Layer: 0
   m_Name: Enemy_2
   m_TagString: Enemy
@@ -140,3 +141,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8018444710708165795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866220585047618345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78332299342b5c54cb050f020a76c3e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  DefalutLifeCount: 2

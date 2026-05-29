@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -37,5 +38,15 @@ public class Bullet : MonoBehaviour
             RestActiveTime = ActiveTime;
             
         }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.SendMessage("LifeDecrement");
+        }
+
+        return;
     }
 }
