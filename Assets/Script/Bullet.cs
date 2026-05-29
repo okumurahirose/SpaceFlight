@@ -33,9 +33,7 @@ public class Bullet : MonoBehaviour
             Pool.Release(this.gameObject);
 
             //Bulletを初期状態に戻す
-            _rigidbody.linearVelocity = new Vector3();
-            _rigidbody.angularVelocity = new Vector3();
-            RestActiveTime = ActiveTime;
+            ResetState();
             
         }
     }
@@ -47,6 +45,17 @@ public class Bullet : MonoBehaviour
             other.gameObject.SendMessage("LifeDecrement");
         }
 
+        Pool.Release(this.gameObject);
+        ResetState();
+
         return;
+    }
+
+    //Bulletを初期状態に戻す
+    void ResetState()
+    {
+        _rigidbody.linearVelocity = new Vector3();
+        _rigidbody.angularVelocity = new Vector3();
+        RestActiveTime = ActiveTime;
     }
 }

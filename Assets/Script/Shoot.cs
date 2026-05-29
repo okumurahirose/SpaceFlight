@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    BulletPool Pool;
+    BulletPool bulletPool;
     InputAction ShootAction;
 
     void Awake()
     {
         //BulletPoolの取得
-        Pool = FindFirstObjectByType<BulletPool>();
+        bulletPool = FindFirstObjectByType<BulletPool>();
     }
 
     void Start()
@@ -27,7 +27,7 @@ public class Shoot : MonoBehaviour
     void Fire()
     {  
             //PoolからBulletを取得
-            GameObject target = Pool.Get();
+            GameObject target = bulletPool.Get();
             //発射位置の設定
             Vector3 targetposition = transform.position;
             targetposition.z += 2;

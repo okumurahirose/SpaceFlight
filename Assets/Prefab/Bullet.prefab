@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb84a0beb804764d8741d8e44a1914e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  ActiveTime: 5
-  Speed: 17
+  ActiveTime: 2.5
+  Speed: 25
 --- !u!1 &4824333618089003336
 GameObject:
   m_ObjectHideFlags: 0

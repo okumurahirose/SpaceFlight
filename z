@@ -1,0 +1,123 @@
+[33mcommit d82c2a6118d3c0f8f3a6cf170647a14927bfe280[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Fri May 29 11:23:26 2026 +0900
+
+    add : BulletによってEnemyを破壊できるようにしました。
+    
+    EnemyプレハブからそれぞれのプレハブにLifeを設定することができ、Lifeの回数Bulletが当たったら破壊できます。
+
+[33mcommit 0507b45e39971a1cd9431607f3801b6e6422f653[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Wed May 27 19:04:04 2026 +0900
+
+    fix : BulletをPoolから取り出した時に前回の慣性を引き継いであっちこっちに飛んでしまうのを修正
+    
+    Bulletの存在時間が終わった時にPoolに返却すると同時にRigidbodyから慣性を０にするようにしました。
+
+[33mcommit cb49cb9febec9a0ac03815cb7219bcc22ba3c83a[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Wed May 27 12:08:32 2026 +0900
+
+    add : オブジェクトプールを用いた弾丸射出プログラムを追加
+    
+    オブジェクトプールを用いて、マウスの右クリックにより、弾丸を発射できるようにしました。
+    
+    Next : 弾丸によって障害物が壊れるようにする
+
+[33mcommit 7ca06311a49638c95a482cb94058fdd36cfcf5ae[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Mon May 25 12:12:17 2026 +0900
+
+    change : 仮で作られていたステージの外観を作りました。
+    
+    ステージを六角形のチューブ内として、外観を作りました。playerは宇宙にある、チューブ内を移動しているという設定です。
+
+[33mcommit bb1e23f63285828a75d9fa6efd8853ef5bf2e19b[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Wed May 20 10:16:14 2026 +0900
+
+    add : Lifeが全損した場合の状態の追加と強制停止の追加、スコアの追加
+
+[33mcommit 8b1ed84b1947bab5188a267362a86299b34047c8[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Sun May 17 20:54:43 2026 +0900
+
+    add : SkyBox（背景）の変更、ライフの概念の追加
+    
+    背景を宇宙っぽく変更しました（GIMPでテクスチャを作成し変更）。
+    ライフの概念を追加して障害物に衝突したらライフカウントが減るようにしました。それに対応させるように、UIを追加しました。
+
+[33mcommit 36d0ad7451025146cb0f91afe08e662ffc7a36b8[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Thu May 14 12:38:13 2026 +0900
+
+    fix : アニメーションよってスクリプトによる機体のZ軸回転が出来なくなってしまう問題を解決
+    
+    これまで使っていた仮の操作機体、Cubeに親オブジェクトplayerを追加し、playerをFlightControllスクリプトが管理し、Animationを子のCubeの残すことで、スクリプトがアニメーションより上の立場であるようにしました。
+
+[33mcommit 4dd7cf8cb4e1ceb5fe94bb5871425e7252b28d5a[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Thu May 14 11:56:53 2026 +0900
+
+    add : 機体が障害物に衝突した時におこるイベントを追加しました
+    
+    機体が障害物に衝突すると全ての移動を停止して、アニメーションが再生されるようにしました。
+    機体が揺れながら一回転するようなアニメーションです。
+    
+    problem ： アニメーションを追加したことによってFlightControllスクリプトのSetRotate()とReturnRotate()が機能しなくなりました。
+                アニメーションがtransform.rotationをプロパティとしているためスクリプトのz軸回転が上書きされたのだと思います
+    
+    next : 上記の問題の修正
+
+[33mcommit 96d342aa410751e2914af63a97533326b57b68a7[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Sat May 9 15:31:13 2026 +0900
+
+    add : 自動でステージを生成するStageGeneraterを実装しました。
+    
+    スクリプトStageGenerateを追加し、ステージが自動生成されるようにしました。
+
+[33mcommit 278aa5c0f2b8666eee669e76dca63d9991c60622[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Fri May 8 20:17:11 2026 +0900
+
+    add : ステージを自動で作成するStageGeneraterの初期型を構築しました。
+    
+    設定されたステージのなかからランダムに選んで、前方にステージを繋げるように追加します。
+
+[33mcommit 3b843af477eb530a43d85b52aa41930d49f0dfab[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Fri May 8 14:46:35 2026 +0900
+
+    fix : FlightControll と FollowTarget スクリプトの修正
+    
+    機体が InputAction の ”Move” を用いて左右上下に動けるようにしました。
+    AngleControll の機能を FlightControll に集約しました。qkey で左回転、ekeyで右回転できます。
+    機体が自動で水平になるのを、rkey でコールチンを呼び出して水平にするようにしました。
+    
+    FollowTarget において、Z軸だけを追いかけるようにしました。
+
+[33mcommit c8947e1faf128b72b57cbda3996cf8b9a5eb55b0[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Thu May 7 13:18:04 2026 +0900
+
+    add : 簡易操作機体とそれを操作するスクリプトを追加
+    
+    仮の機体とそれを操作するスクリプトを追加しました。
+    メインカメラが機体に追随するためのスクリプトを追加しました。
+    
+    前回設定時に忘れていたTextMeshProをインポートしました。
+
+[33mcommit 1109bc8b1afde819dea1536966a63e11781d306a[m
+Author: Hirose2228 <hirose2228@gmail.com>
+Date:   Tue May 5 14:02:51 2026 +0900
+
+    initial
+    
+    Unityでプロジェクトを作成した何もない状態です。
+
+[33mcommit 03c0b032fbc7a95825a75f0d1938cd3ac93b8c00[m
+Author: Hirose OKUMURA <hirose2228@gmail.com>
+Date:   Tue May 5 13:35:55 2026 +0900
+
+    Initial commit
