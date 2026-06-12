@@ -19,7 +19,7 @@ public class FlightControll : MonoBehaviour
     [SerializeField] private float RotateRate; //横回転の速度の割合 [定数]
     [SerializeField] private float ReRotateRate; //水平に戻る速度の割合 [m/s]
 
-    Vector3 MoveDirection = Vector3.zero;
+    Vector3 MoveDirection = Vector3.zero; //移動距離
     InputAction _moveAction;
     Animator _animator;
 
@@ -27,8 +27,10 @@ public class FlightControll : MonoBehaviour
     float RecoverTime = 0.0f; //残りのStun状態時間
     bool IsDead = false; //Lifeが０になったか
     [SerializeField] private GameObject GameController;
-    
-    
+    [SerializeField] private Button UpButton; 
+    [SerializeField] private Button DownButton;
+    [SerializeField] private Button RightButton;
+    [SerializeField] private Button LeftButton;
 
     void Start()
     {
@@ -57,10 +59,17 @@ public class FlightControll : MonoBehaviour
             AcceleratedSpeed += Acceleration_Z * Time.deltaTime;
             MoveDirection.z = Mathf.Clamp(AcceleratedSpeed,0,Speed_Z) * Time.deltaTime;
 
-            //横方向への移動
-            MoveDirection.x = _moveAction.ReadValue<Vector2>().x * Speed_X * Time.deltaTime;
-            //縦方向への移動
-            MoveDirection.y = _moveAction.ReadValue<Vector2>().y * Speed_Y * Time.deltaTime;
+
+            //キーボード操作用
+            MoveDirection.x = _moveAction.ReadValue<Vector2>().x * Speed_X * Time.deltaTime; //上下
+            MoveDirection.y = _moveAction.ReadValue<Vector2>().y * Speed_Y * Time.deltaTime; //左右
+
+            //UI入力操作用
+            if (UpButton.IsHold)     MoveDirection.y = Speed_Y * Time.deltaTime;  //上
+            if (DownButton.IsHold)   MoveDirection.y = -Speed_Y * Time.deltaTime; //下
+            if (RightButton.IsHold)  MoveDirection.x = Speed_X * Time.deltaTime;  //右
+            if (LeftButton.IsHold)   MoveDirection.x = -Speed_X * Time.deltaTime; //左
+            
 
             //機体をZ軸回転させる（q:左　e:右）
             if(Keyboard.current.qKey.isPressed){

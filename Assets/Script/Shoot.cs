@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    BulletPool bulletPool;
+    [SerializeField] private BulletPool bulletPool;
     InputAction ShootAction;
 
-    void Awake()
+    /*void Awake()
     {
         //BulletPoolの取得
         bulletPool = FindFirstObjectByType<BulletPool>();
-    }
+    }*/
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class Shoot : MonoBehaviour
        
     }
 
-    void Fire()
+    public void Fire()
     {  
             //PoolからBulletを取得
             GameObject target = bulletPool.Get();
