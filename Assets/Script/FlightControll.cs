@@ -31,6 +31,8 @@ public class FlightControll : MonoBehaviour
     [SerializeField] private Button DownButton;
     [SerializeField] private Button RightButton;
     [SerializeField] private Button LeftButton;
+    [SerializeField] private Button RightRotateButton;
+    [SerializeField] private Button LeftRotateButton;
 
     void Start()
     {
@@ -72,11 +74,11 @@ public class FlightControll : MonoBehaviour
             
 
             //機体をZ軸回転させる（q:左　e:右）
-            if(Keyboard.current.qKey.isPressed){
+            if(Keyboard.current.qKey.isPressed || LeftRotateButton.IsHold){
                 float abs = 1;
                 SetRotate(abs);
             }
-            else if(Keyboard.current.eKey.isPressed)
+            else if(Keyboard.current.eKey.isPressed || RightRotateButton.IsHold)
             {
                 float abs = -1;
                 SetRotate(abs);
@@ -105,6 +107,12 @@ public class FlightControll : MonoBehaviour
         //機体の角度をいくら傾けるか
         float target = abs * RotateRate;
         transform.Rotate(0,0,target);
+    }
+
+    //UI入力からコールチンを呼び出す
+    public void CollRerotate()
+    {
+        StartCoroutine(ReturnRotate());
     }
 
     //機体の角度を自動で水平に戻す

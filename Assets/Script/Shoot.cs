@@ -5,23 +5,11 @@ using UnityEngine.InputSystem;
 public class Shoot : MonoBehaviour
 {
     [SerializeField] private BulletPool bulletPool;
-    InputAction ShootAction;
 
-    /*void Awake()
-    {
-        //BulletPoolの取得
-        bulletPool = FindFirstObjectByType<BulletPool>();
-    }*/
-
-    void Start()
-    {
-        ShootAction = InputSystem.actions.FindAction("Attack");
-    }
 
     void Update()
     {
-        if (ShootAction.WasPerformedThisFrame()) Fire();
-       
+        if (Keyboard.current.spaceKey.wasPressedThisFrame) Fire();
     }
 
     public void Fire()
