@@ -154,3 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   DefalutLifeCount: 1
+  BounasScore: 100
+  gameControll: {fileID: 0}
