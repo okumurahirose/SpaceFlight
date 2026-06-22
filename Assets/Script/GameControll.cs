@@ -6,8 +6,11 @@ using TMPro;
 public class GameControll : MonoBehaviour
 {   
     [SerializeField] private GameObject Player; 
+    [SerializeField] private GameObject sceneControll;
     [SerializeField] private Image[] Lifes;
     [SerializeField] private TextMeshProUGUI Score;
+
+    public bool IsDead = false; //Playerが死亡状態であるかどうか
     const int LifeCount = 3;
     int NowLifeCount;
     int position;
@@ -45,8 +48,11 @@ public class GameControll : MonoBehaviour
         Lifes[NowLifeCount-1].gameObject.SetActive(false);
         NowLifeCount--;
 
-        //Lifeが全損したら死亡状態を発信
-        if(NowLifeCount == 0)  Player.SendMessage("Dead");
+        //Lifeが全損したら死亡状態にする
+        if(NowLifeCount == 0){
+            IsDead = true;
+            Invoke("CallSceneControll",4.0f); //4秒後にタイトルシーンに戻る
+            }
 
         return;
     }
@@ -54,5 +60,10 @@ public class GameControll : MonoBehaviour
     public void AddBounasScore(int EnemyScore)
     {
         BounasScore += EnemyScore;
+    }
+
+    private void CallSceneControll()
+    {
+        sceneControll.SendMessage("MainToTitle");
     }
 }

@@ -25,8 +25,10 @@ public class FlightControll : MonoBehaviour
 
     const float StunTime = 0.5f; //Stun状態の長さ
     float RecoverTime = 0.0f; //残りのStun状態時間
-    bool IsDead = false; //Lifeが０になったか
-    [SerializeField] private GameObject GameController;
+    int CheckPoint = 1; //スピードが上がる条件
+
+    //UI入力のための宣言
+    [SerializeField] private GameControll gameControll;
     [SerializeField] private Button UpButton; 
     [SerializeField] private Button DownButton;
     [SerializeField] private Button RightButton;
@@ -99,6 +101,14 @@ public class FlightControll : MonoBehaviour
         
         //移動の反映
         transform.position = GlobalDirection;
+
+        if(transform.position.z > 1000 * CheckPoint)
+        {
+            Speed_X *= 1.1f;
+            Speed_Y *= 1.1f;
+            Speed_Z += 7;
+            CheckPoint++;
+        }
     }
 
      //入力に対して機体の角度を調整
@@ -137,15 +147,9 @@ public class FlightControll : MonoBehaviour
     bool IsStun()
     {
         //死んでいたら強制スタン状態
-        if(IsDead) return true;
+        if(gameControll.IsDead) return true;
 
         return RecoverTime > 0.0f;
-    }
-
-    //呼び出されたら死んでいる状態にする
-    void Dead()
-    {
-        IsDead = true;
     }
 
     //Enemyに接触したら衝突イベントを実行
@@ -160,6 +164,6 @@ public class FlightControll : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        GameController.SendMessage("ManageLife");
+        gameControll.gameObject.SendMessage("ManageLife");
     }
 }
