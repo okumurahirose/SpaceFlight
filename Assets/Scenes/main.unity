@@ -273,6 +273,9 @@ MonoBehaviour:
   Stages:
   - {fileID: 7806768850848274492, guid: 3a2fdd15049b5b847ae5f72e67277915, type: 3}
   - {fileID: 7806768850848274492, guid: 67c571d69a80f5142bc4d1a51a268037, type: 3}
+  - {fileID: 7806768850848274492, guid: dcc530df99480fe4290bdc2ba36e4d19, type: 3}
+  - {fileID: 7806768850848274492, guid: 36579adc4302bfd4ba6f73c9d68f5f23, type: 3}
+  - {fileID: 7806768850848274492, guid: a3202dd52e320ff4684380d5256b6575, type: 3}
   Parent: {fileID: 2095667188}
   GeneratedStages:
   - {fileID: 1275648479}

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4191472694458094130}
   - component: {fileID: 1059064684259697318}
   m_Layer: 0
-  m_Name: Enemy_4
+  m_Name: Enemy_5
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -153,5 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78332299342b5c54cb050f020a76c3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  DefalutLifeCount: 4
-  BounasScore: 400
+  DefalutLifeCount: 10
+  BounasScore: 1000
