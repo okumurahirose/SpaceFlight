@@ -50,9 +50,24 @@ public class GameControll : MonoBehaviour
 
         //Lifeが全損したら死亡状態にする
         if(NowLifeCount == 0){
-            IsDead = true;
-            Invoke("CallSceneControll",4.0f); //4秒後にタイトルシーンに戻る
-            }
+            
+            IsDead = true; //死亡状態に変更
+
+            //スコアのセーブ
+            int Score = position + BounasScore;
+            PlayerPrefs.SetInt("PreviousScore",Score);
+            int Max = PlayerPrefs.GetInt("MaxScore",0);
+            
+            //最大スコアの更新
+            if(Max < Score)
+            {
+                PlayerPrefs.SetInt("MaxScore",Score);
+            } 
+
+            PlayerPrefs.Save(); //セーブスコアの確定
+
+            Invoke("CallSceneControll",2.0f); //2秒後にタイトルシーンに戻る
+        }
 
         return;
     }
