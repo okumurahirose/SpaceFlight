@@ -153,5 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78332299342b5c54cb050f020a76c3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  DefalutLifeCount: 4
-  BounasScore: 400
+  DefalutLifeCount: 10
+  BounasScore: 500

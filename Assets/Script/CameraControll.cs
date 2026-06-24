@@ -25,7 +25,7 @@ public class CameraControll : MonoBehaviour
     }
 
     //次のカメラに切り替える
-    void ChangeCamera()
+    public void ChangeCamera()
     {   
         Cameras[Now].enabled = false; //今のカメラを非稼働状態に
 

@@ -153,6 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78332299342b5c54cb050f020a76c3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  DefalutLifeCount: 3
-  BounasScore: 300
-  gameControll: {fileID: 0}
+  DefalutLifeCount: 7
+  BounasScore: 400
